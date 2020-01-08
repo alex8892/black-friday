@@ -62,7 +62,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     public Double getFilteredOrdersSum(Date dateFrom, Date dateTo) {
         Double sum = 0.0;
         try (Session session = factory.openSession()) {
-            Query<Double> query = session.createQuery("from Order where date >= :dateFrom and date <= :dateTo");
+            Query<Double> query = session.createQuery("select sum(price) from Order where date >= :dateFrom and date <= :dateTo");
             query.setParameter("dateFrom", dateFrom);
             query.setParameter("dateTo", dateTo);
             sum = query.getSingleResult();
