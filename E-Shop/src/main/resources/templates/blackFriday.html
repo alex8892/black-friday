@@ -124,6 +124,7 @@
             <th scope="col">Description</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
+            <th scope="col">Reduced price</th>
             <th scope="col">Discount</th>
             <th scope="col">Choose</th>
         </tr>
@@ -134,6 +135,7 @@
             <td th:text="${product.description}"></td>
             <td th:text="${product.quantity}"></td>
             <td th:text="${product.price}"></td>
+            <td th:text="${product.reducedPrice}"></td>
             <div th:if="${product.addedToBlackFriday==1}">
                 <td th:text="${product.discount}"></td>
             </div>
@@ -145,12 +147,12 @@
                             <form th:action="@{/black-friday/add}" th:object="${productDto}" class="pull-right"
                                   method="post">
                                 <div class="input-group mb-3">
-                                    <input class="form-control" th:type="number" th:min="0" th:step="5"
+                                    <input class="form-control" th:type="number" th:min="0" th:step="5" th:max="100"
                                            id="code1"
                                            th:field="${productDto.discount}"/>
 
                                     <input th:value="${product.id}" name="productId" hidden="true"/>
-                                    <input th:value="${product.reducedPrice}" name="price" hidden="true"/>
+                                    <input th:value="${product.price}" name="price" hidden="true"/>
 
                                     <div class="input-group-append">
                                         <button class="btn btn-success" role="button">Add</button>

@@ -32,6 +32,7 @@ public class OrderController {
     public ModelAndView showOrders() {
         ModelAndView mav = new ModelAndView("orders");
         mav.addObject("orders", orderService.getAll());
+        mav.addObject("sum", orderService.getAllOrdersSum());
         mav.addObject("blackFridayStarted", blackFridayService.isStarted());
         return mav;
     }
@@ -40,6 +41,7 @@ public class OrderController {
     public ModelAndView showFilteredOrders(@RequestParam String daterange) {
         ModelAndView mav = new ModelAndView("orders");
         mav.addObject("orders", orderService.getFilterOrders(daterange));
+        mav.addObject("sum", orderService.getFilteredOrdersSum(daterange));
         mav.addObject("blackFridayStarted", blackFridayService.isStarted());
         return mav;
     }

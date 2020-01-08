@@ -34,6 +34,17 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
+    public Double getAllOrdersSum() {
+        Double sum = 0.0;
+        try (Session session = factory.openSession()) {
+            sum = session.createQuery("select sum(price) from Order", Double.class).getSingleResult();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return sum;
+    }
+
+    @Override
     public List<Order> getFilterOrders(Date dateFrom, Date dateTo) {
         List<Order> orders = new ArrayList<>();
         try (Session session = factory.openSession()) {
@@ -45,6 +56,20 @@ public class OrderRepositoryImpl implements OrderRepository {
             System.out.println(ex.getMessage());
         }
         return orders;
+    }
+
+    @Override
+    public Double getFilteredOrdersSum(Date dateFrom, Date dateTo) {
+        Double sum = 0.0;
+        try (Session session = factory.openSession()) {
+            Query<Double> query = session.createQuery("from Order where date >= :dateFrom and date <= :dateTo");
+            query.setParameter("dateFrom", dateFrom);
+            query.setParameter("dateTo", dateTo);
+            sum = query.getSingleResult();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return sum;
     }
 
 

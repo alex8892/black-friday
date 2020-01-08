@@ -9,7 +9,11 @@ public interface OrderRepository {
 
     List<Order> getAll();
 
+    Double getAllOrdersSum();
+
     List<Order> getFilterOrders(Date dateFrom, Date dateTo);
+
+    Double getFilteredOrdersSum(Date dateFrom, Date dateTo);
 
     Order getOrderById(int id);
 
