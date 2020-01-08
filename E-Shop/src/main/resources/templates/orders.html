@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>E-Shop</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">E-shop</a>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+            </li>
+
+
+            <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+
+            </div>
+
+
+            <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/home" id="navbarDropdownMenuLink1"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/home">All</a>
+                        <a class="dropdown-item" href="/products/new">Create</a>
+                    </div>
+                </li>
+            </div>
+
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/users" id="navbarDropdownMenuLink2"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/users">All</a>
+                        <a class="dropdown-item" href="/register/employee">Create Employee</a>
+                    </div>
+                </li>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/black-friday" id="navbarDropdownMenuLink3"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Black Friday
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                        <div th:if="${!blackFridayStarted}">
+                            <a class="dropdown-item" href="/black-friday/start">Start</a>
+                        </div>
+
+                        <div th:if="${blackFridayStarted}">
+                            <a class="dropdown-item" href="/black-friday/stop">Stop</a>
+                        </div>
+
+                        <a class="dropdown-item" href="/black-friday">Show</a>
+                    </div>
+                </li>
+            </div>
+
+
+        </ul>
+    </div>
+
+
+    <form th:action="@{/login}" sec:authorize="!isAuthenticated()" method="get">
+        <button class="btn btn-outline-success" type="submit" value="Login">Login</button>
+    </form>
+
+    <form th:action="@{/logout}" sec:authorize="isAuthenticated()" method="post">
+        <span sec:authentication="name"></span>
+        <button class="btn btn-outline-danger" type="submit" value="Logout">Logout</button>
+    </form>
+
+
+</nav>
+
+<form th:action="@{/orders/filtered/}">
+    <div class="row">
+        <div class="col">
+            <h3>Pick dates</h3>
+        </div>
+        <div class="col">
+            <label>
+                <input type="text" th:name="daterange" th:value="daterange" class="form-control"/>
+            </label>
+        </div>
+        <div class="col">
+            <button class="btn btn-success" type="submit" role="button">Filter</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'center',
+            autoApply: true
+        });
+    });
+</script>
+
+
+<div class="container-fluid table-resposive">
+    <table class="table">
+
+
+        <thead>
+        <tr>
+            <th scope="col">User name</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.getUser().username} "></td>
+            <td th:text="${order.getProduct().getName()}"></td>
+            <td th:text="${order.getPrice()}"></td>
+            <td th:text="${order.date}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
