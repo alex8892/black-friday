@@ -112,7 +112,7 @@
 
         <div th:if="${error != null}">
             <div class="alert alert-danger">
-                <span th:text="${error}">Dummy Data</span>
+                <span th:text="${error}"></span>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="minPrice">Minimum price</span>
                 </div>
-                <input th:field="*{minPrice}" type="text" class="form-control input-lg" placeholder="Minimum price"
+                <input th:field="*{minPrice}" type="number" step="0.1" min="1" class="form-control input-lg" placeholder="Minimum price"
                        required="true" autofocus="true">
                 <i class="error" th:errors="*{minPrice}"/>
             </div>
@@ -157,7 +157,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="price">Price</span>
                 </div>
-                <input th:field="*{price}" type="text" class="form-control" placeholder="Price" aria-label="Price"
+                <input th:field="*{price}" type="number" step="0.1" min="1" class="form-control" placeholder="Price" aria-label="Price"
                        required="true" autofocus="true">
                 <i class="error" th:errors="*{price}"/>
             </div>
@@ -168,7 +168,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="quantity">Quantity</span>
                 </div>
-                <input th:field="*{quantity}" type="text" class="form-control" placeholder="Quantity"
+                <input th:field="*{quantity}" type="number" min="1" step="1" class="form-control" placeholder="Quantity"
                        aria-label="Quantity"
                        required="true" autofocus="true">
                 <i class="error" th:errors="*{quantity}"/>

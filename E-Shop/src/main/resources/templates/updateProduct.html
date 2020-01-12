@@ -131,11 +131,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="Name">Name</span>
                 </div>
-                <input th:value="${product.name}" th:field="*{name}" type="text"
-                       class="form-control input-lg" placeholder="Name"
-                       aria-label="Name"
-                       required="true" autofocus="true">
-                <i class="error" th:errors="*{name}"/>
+                <span th:text="${product.name}" type="text" class="form-control input-lg"></span>
+                <input th:value="${product.name}" th:field="*{name}" type="hidden">
             </div>
         </div>
 
@@ -158,7 +155,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="minPrice">Minimum price</span>
                 </div>
-                <input th:value="${product.minPrice}" th:field="*{minPrice}" type="text"
+                <input th:value="${product.minPrice}" th:field="*{minPrice}" type="number" step="0.1" min="1"
                        class="form-control input-lg"
                        placeholder="Minimum price"
                        required="true" autofocus="true">
@@ -171,7 +168,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="price">Price</span>
                 </div>
-                <input th:value="${product.price}" th:field="*{price}" type="text" class="form-control"
+                <input th:value="${product.price}" th:field="*{price}" type="number" step="0.1" min="1" class="form-control"
                        placeholder="Price" aria-label="Price"
                        required="true" autofocus="true">
                 <i class="error" th:errors="*{price}"/>
@@ -183,7 +180,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="quantity">Quantity</span>
                 </div>
-                <input th:value="${product.quantity}" th:field="*{quantity}" type="text" class="form-control"
+                <input th:value="${product.quantity}" th:field="*{quantity}" type="number" step="1" min="1" class="form-control"
                        placeholder="Quantity"
                        aria-label="Quantity"
                        required="true" autofocus="true">

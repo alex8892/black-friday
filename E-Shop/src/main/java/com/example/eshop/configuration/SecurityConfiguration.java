@@ -36,13 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/products","/products/black-friday", "/orders/new")
+                .antMatchers("/products", "/products/black-friday", "/orders/new")
                 .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/products/**"
                         , "/orders/**",
                         "/black-friday/**")
                 .hasAnyRole("EMPLOYEE", "ADMIN")
-                .antMatchers("/users", "/users/delete/{username}","/register/employee")
+                .antMatchers("/users", "/users/delete/{username}", "/register/employee")
                 .hasRole("ADMIN")
                 .antMatchers("/")
                 .permitAll()

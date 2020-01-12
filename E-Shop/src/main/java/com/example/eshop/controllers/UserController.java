@@ -24,7 +24,7 @@ public class UserController {
     @GetMapping("/users")
     public ModelAndView showClients() {
         ModelAndView mav = new ModelAndView("users");
-        mav.addObject("clients", userService.getAll());
+        mav.addObject("users", userService.getAll());
         mav.addObject("blackFridayStarted", blackFridayService.isStarted());
         return mav;
     }

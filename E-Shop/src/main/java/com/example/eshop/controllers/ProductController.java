@@ -58,19 +58,18 @@ public class ProductController {
     public String createProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult errors,
                                 Model model) {
 
+        model.addAttribute("blackFridayStarted", blackFridayService.isStarted());
+
         if (errors.hasErrors()) {
-            model.addAttribute("blackFridayStarted", blackFridayService.isStarted());
             return "createProduct";
         }
 
         if (productService.checkProductExist(productDto.getName())) {
             model.addAttribute("error", "Product with that name already exist!");
-            model.addAttribute("blackFridayStarted", blackFridayService.isStarted());
             return "createProduct";
         }
         if (productDto.getPrice() < productDto.getMinPrice()) {
             model.addAttribute("error", "Price can not be less then minimum price!");
-            model.addAttribute("blackFridayStarted", blackFridayService.isStarted());
             return "createProduct";
         }
 

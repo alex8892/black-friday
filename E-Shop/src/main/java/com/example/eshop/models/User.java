@@ -26,6 +26,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "enabled")
+    private int enabled;
 
     public User() {
     }
@@ -46,5 +48,11 @@ public class User {
         this.password = password;
     }
 
+    public int getEnabled() {
+        return enabled;
+    }
 
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
 }

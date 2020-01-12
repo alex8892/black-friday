@@ -124,8 +124,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each=" client : ${clients}">
-            <td th:text="${client.username} "></td>
+        <tr th:each=" user : ${users}">
+            <td th:text="${user.username} "></td>
+            <td> <form th:action="@{/users/delete/{username}(username = ${user.username})}" class="pull-right"
+                       method="post">
+                <button class="btn btn-danger" role="button"> Delete</button>
+            </form></td>
         </tr>
         </tbody>
     </table>

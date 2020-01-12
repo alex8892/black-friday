@@ -61,6 +61,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteUser(User user) {
+        user.setEnabled(0);
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             session.delete(user);

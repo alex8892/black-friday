@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>E-Shop</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -92,7 +93,7 @@
                             <a class="dropdown-item" href="/black-friday/stop">Stop</a>
                         </div>
 
-                        <a class="dropdown-item" href="/black-friday">Products</a>
+                        <a class="dropdown-item" href="/black-friday">Show</a>
                     </div>
                 </li>
             </div>
@@ -155,7 +156,14 @@
                                    th:field="${order.quantity}"/>
 
                             <input th:value="${product.id}" name="productId" hidden="true"/>
-                            <input th:value="${product.price}" name="price" hidden="true"/>
+
+                            <div th:if="${product.addedToBlackFriday==0 || !blackFridayStarted}">
+                                <input th:value="${product.price}" name="price" hidden="true"/>
+                            </div>
+
+                            <div th:if="${product.addedToBlackFriday==1 && blackFridayStarted}">
+                                <input th:value="${product.reducedPrice}" name="price" hidden="true"/>
+                            </div>
 
                             <div class="input-group-append">
                                 <button class="btn btn-success" role="button">Buy</button>
